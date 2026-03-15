@@ -915,21 +915,29 @@
 
         menuToggle.addEventListener('click', toggleMenu);
 
-        // Close menu when link is clicked
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', (e) => {
-        const targetId = link.getAttribute('href');
-        if(targetId.startsWith('#')) {
-            // Scrollen zuerst
-            document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
-            // Menü nach kurzer Verzögerung schließen
-            setTimeout(closeMenu, 300); // 300ms, passt zum scroll
-            e.preventDefault(); // Standard-Scroll verhindern, wir machen es manuell
-        } else {
+       // Close menu when link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+            // 1. Menü sofort schließen (wichtig für Mobile)
             closeMenu();
+        
+            const targetId = link.getAttribute('href');
+        
+            // 2. Nur wenn es ein Anker-Link ist (#...)
+            if(targetId.startsWith('#')) {
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    // Verhindert das "Springen", erlaubt weiches Scrollen
+                    e.preventDefault();
+                targetElement.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         }
     });
 });
+
 
         navOverlay.addEventListener('click', closeMenu);
 
