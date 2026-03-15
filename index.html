@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PVV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* accent-gold = text color */
+        /* Color Palette: Neutral Warm Gray Theme */
+        :root {
+            --primary-dark: #12100f;
+            --primary-grey: #5b5f63;
+            --accent-gold: #ed8403;
+            --accent-warm: #c4c9ce;
+            --text-light: #f5f1ed;
+            --text-muted: #a3a9ae;
+            --bg-dark: #0c0c0c;
+            --border-strong: rgba(175, 179, 183, 0.2);
+            --overlay-light: rgba(110, 113, 118, 0.4);
+            --overlay-dark: rgba(22, 24, 26, 0.6);
+            --shadow: rgba(175, 179, 183, 0.2);
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(180deg, rgba(22, 24, 26, 0.95) 0%, rgba(22, 24, 26, 0.7) 100%);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-strong);
+            transition: var(--transition);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-warm));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-warm));
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 60px;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--overlay-light) 0%, var(--overlay-dark) 100%),
+                        url('https://www.parkraum-versorgungstechnik.de/upload/slider/slider1.jpg') center/cover;
+            animation: zoomIn 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-warm));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-warm));
+            color: var(--primary-dark);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            cursor: pointer;
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(155, 152, 147, 0.4);
+        }
+
+        .cta-button.outline {
+            background: transparent;
+            color: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+        }
+
+        .cta-button.outline:hover {
+            background: rgba(155, 152, 147, 0.1);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-warm));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* About Section */
+        .about {
+            background: linear-gradient(135deg, var(--overlay-light) 0%, rgba(18, 16, 14, 0.5) 100%);
+            border-top: 1px solid var(--border-strong);
+            border-bottom: 1px solid var(--border-strong);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-gold);
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .about-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            aspect-ratio: 1;
+            animation: slideInRight 1s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Produkte Section */
+        .product {
+            background: var(--primary-dark);
+        }
+
+       .product-grid {
+    display: grid;
+    /* Ändere repeat(3, 1fr) zu auto-fill für mehr Flexibilität */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 2rem;
+    margin-bottom: 3rem; /* Abstand nach unten zur Galerie */
+}
+
+
+        .menu-item {
+            background: linear-gradient(135deg, var(--overlay-light) 0%, rgba(18, 16, 14, 0.8) 100%);
+            border: 1px solid var(--border-strong);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        /* Center the single item on its own row */
+        .product-item.centered {
+            grid-column: 1 / -1;
+            justify-self: center;
+            max-width: 360px;
+        }
+
+        .product-item:hover {
+            transform: translateY(-10px);
+            border-color: rgba(155, 152, 147, 0.5);
+            box-shadow: 0 20px 40px rgba(155, 152, 147, 0.15);
+        }
+
+        .product-item-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-item:hover .product-item-image img {
+            transform: scale(1.1);
+        }
+
+        .product-item-content {
+            padding: 1.5rem;
+        }
+
+        .product-item-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-gold);
+        }
+
+        .product-item-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-item-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-warm);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            background: linear-gradient(135deg, var(--overlay-light) 0%, rgba(18, 16, 14, 0.5) 100%);
+            border-top: 1px solid var(--border-strong);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.15) rotate(2deg);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(18, 16, 14, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay-text {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--primary-dark);
+            border-top: 1px solid var(--border-strong);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-gold);
+        }
+
+        .contact-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item-value {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            background: rgba(155, 152, 147, 0.05);
+            border: 1px solid var(--border-strong);
+            color: var(--text-light);
+            padding: 0.8rem;
+            border-radius: 5px;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            background: rgba(155, 152, 147, 0.1);
+            box-shadow: 0 0 10px rgba(155, 152, 147, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-dark);
+            border-top: 1px solid var(--border-strong);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--accent-warm);
+            transform: scale(1.2);
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        /* Ersetze/Ergänze diesen Teil in deinem Media Query */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block; /* Macht den Button sichtbar */
+        position: relative;
+        z-index: 3100; /* Liegt über den nav-links */
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 2rem;
+        cursor: pointer;
+    }
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 280px;
+        background: #0c0c0c; /* Deine Hintergrundfarbe */
+        flex-direction: column;
+        padding: 80px 0 2rem; /* Platz für den X-Button oben */
+        gap: 0;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 3000; /* Sicherstellen, dass dies ganz oben liegt */
+        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    }
+
+    .nav-links.active {
+        transform: translateX(0);
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 1.2rem 2.5rem; /* Große Klickfläche für Daumen */
+        width: 100%;
+        font-size: 1.2rem;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* Das Overlay muss unter den Links, aber über dem Content liegen */
+    .nav-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.7);
+        z-index: 2500; 
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .nav-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    body.menu-open {
+        overflow: hidden; /* Verhindert Scrollen im Hintergrund */
+    }
+}
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .hero {
+                margin-top: 50px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+             <div class="logo">
+                        <a href="#home">
+                                <img src="https://www.parkraum-versorgungstechnik.de/upload/logos/pvv_logo_text.png" alt="PVV Logo">
+                        </a>
+             </div>
+                <ul class="nav-links" id="main-nav">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">Wilkommen</a></li>
+                <li><a href="#product">Produkte</a></li>
+                <li><a href="#gallery">Galerie</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+                </ul>
+                        <button class="menu-toggle" id="menuToggle" aria-label="Navigation öffnen" aria-expanded="false" aria-controls="main-nav">☰</button>        </nav>
+    </header>
+<div class="nav-overlay" id="navOverlay"></div>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Parkraum- & Versorgungstechnik Vorpommern</h1>
+            <p>???</p>
+            <a href="#product" class="cta-button">Produkte ansehen</a>
+            <a href="#contact" class="cta-button outline">Kontakt</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2 class="section-title">Wilkommen</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Herzlich Willkommen auf der Homepage der Firma Parkraum- & Versorgungstechnik Vorpommern GmbH </h3>
+                <p>
+                    Wir bieten Ihnen kompetenten Service und eine umfangreiche Produktpalette
+                     von Schrankenanlagen über elektrisch versenkbare Poller bis zur Zugangskontrolle, sowie deren Wartung an
+                </p>
+                <p>
+                    Wenn Sie Fragen zu unseren Produkten und Leistungen haben, dann nutzen Sie unser Kontaktformular, damit wir Ihnen gezielt weiterhelfen können.
+                </p>
+                <p>
+                    Gerne beantworten wir Ihre Fragen auch telefonisch unter unseren Rufnummern:
+
+                    Telefon: 038377 / 372370
+                    Fax: 038377 / 373373
+
+                    Öffnungszeiten/ Sprechzeiten
+
+                    Mo-Do: 08:00 - 14:00 Uhr  Fr: 08:00 - 12:00 Uhr
+                </p>
+            </div>
+            <div class="about-image">
+                <img src="https://www.parkraum-versorgungstechnik.de/upload/startseite/willkommen.jpg" alt="Wilkommen">
+            </div>
+        </div>
+    </section>
+
+    <!-- Produkte Section -->
+    <section class="product" id="product">
+        <h2 class="section-title">Produkte</h2>
+        <div class="product-grid">
+            <div class="product-item">
+                <div class="product-item-image">
+                    <img src="https://www.parkraum-versorgungstechnik.de/upload/produkte/schranken.jpg" alt="Schrankanlagen">
+                </div>
+                <div class="product-item-content">
+                    <div class="product-item-title">Schrankanlagen</div>
+                    <div class="product-item-description">Weltweit seit Jahrzehnten ein Inbegriff für Qualität, Zuverlässigkeit und Sicherheit. Erfahrung, Kompetenz und das große Lieferprogramm für die unterschiedlichsten Anwendungen und Anforderungen sind die Voraussetzungen dafür, für jeden Kundenwunsch eine optimale Lösung zu bieten.</div>
+                </div>
+            </div>
+
+            <div class="product-item">
+                <div class="product-item-image">
+                    <img src="https://www.parkraum-versorgungstechnik.de/upload/produkte/poller.jpg" alt="Polleranlagen">
+                </div>
+                <div class="product-item-content">
+                    <div class="product-item-title">Polleranlagen</div>
+                    <div class="product-item-description">Hochwertige Polleranlagen für Zufahrten, Einkaufs- und Fussgänger-, Sicherheits- oder Sperrzonen, als Schutz vor unberechtigter Nutzung von Parkplätzen</div>
+                </div>
+            </div>
+
+            <div class="product-item">
+                <div class="product-item-image">
+                    <img src="https://www.parkraum-versorgungstechnik.de/upload/produkte/parkautomaten.jpg" alt="Latte">
+                </div>
+                <div class="product-item-content">
+                    <div class="product-item-title">Parkautomaten</div>
+                    <div class="product-item-description">Für die optimale Bewirtschaftung öffentlicher Parkgelegenheiten sind unsere Parkscheinautomaten eine hervorragende Wahl.</div>
+                </div>
+            </div>
+
+            <div class="product-item centered">
+                <div class="product-item-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSu4qdkg77RLBmHlT3KpaVz_GVAgCR7OQ05w&s" alt="Notrufsäule">
+                </div>
+                <div class="product-item-content">
+                    <div class="product-item-title">Notrufsäule</div>
+                    <div class="product-item-description">-Notrufterminal mit Defibrillator
+                                                            und Überwachungskamera
+                                                          -Verbindung zur Leitstelle
+                                                            auch ohne Netzstrom (autak) mit Solardach erhältlich</div>
+                </div>
+            </div>
+
+            <!--
+            <div class="product-item">
+                <div class="product-item-image">
+                    <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop" alt="Flat White">
+                </div>
+                <div class="product-item-content">
+                    <div class="product-item-title">Flat White</div>
+                    <div class="product-item-description">Australisches Klassiker mit samtigem Microfoam</div>
+                    <div class="product-item-price">€4,90</div>
+                </div>
+            </div>
+
+            <div class="product-item">
+                <div class="product-item-image">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop" alt="Cold Brew">
+                </div>
+                <div class="product-item-content">
+                    <div class="product-item-title">Cold Brew</div>
+                    <div class="product-item-description">Erfrischender Cold Brew – perfekt für warme Tage</div>
+                    <div class="product-item-price">€4,20</div>
+                </div>
+            </div>
+            -->
+        </div>
+    </section>
+
+
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <h2 class="section-title">Galerie</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://www.parkraum-versorgungstechnik.de/cache/9354e9461679fef668d04fb836022540.jpg" alt="Campingplatz Pommernland Zinnowitz">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-text">Campingplatz Pommernland Zinnowitz</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://www.parkraum-versorgungstechnik.de/cache/9de284f07e7448e120d9f56757f39786.jpg" alt="Ostseebad Zinnowitz Strandzufahrt 'Fischerstrand'">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-text">Ostseebad Zinnowitz Strandzufahrt "Fischerstrand"</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://www.parkraum-versorgungstechnik.de/cache/fd7b3b61e7b8fd4583ffd4d439e93faf.jpg" alt="Ostseebad Zinnowitz Strandzufahrt 'Bernsteintherme'">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-text">Ostseebad Zinnowitz Strandzufahrt "Bernsteintherme"</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://www.parkraum-versorgungstechnik.de/cache/b20f3c259cd82737dfab0f6626892f29.jpg" alt="Ostseebad Zinnowitz Strandparkplatz">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-text">Ostseebad Zinnowitz Strandparkplatz</div>
+                </div>
+            </div>
+            <!--
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1447933601403-0c6688bcf566?w=400&h=400&fit=crop" alt="Café Atmosphäre">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-text">Café Atmosphäre</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400&h=400&fit=crop" alt="Kaffee-Bohnen">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-text">Kaffee-Bohnen</div>
+                </div>
+            </div>
+            -->
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2 class="section-title">Kontakt & Besuch</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>Besuch uns</h3>
+                <div class="contact-item">
+                    <div class="contact-item-label">Adresse</div>
+                    <div class="contact-item-value">Kreuzberg Str. 42<br>10965 Berlin, Deutschland</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-item-label">Telefon</div>
+                    <div class="contact-item-value">+49 (30) 123-456789</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-item-label">E-Mail</div>
+                    <div class="contact-item-value">hello@kaffeekult.de</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-item-label">Öffnungszeiten</div>
+                    <div class="contact-item-value">
+                        Mo-Fr: 7:00 - 20:00<br>
+                        Sa-So: 9:00 - 19:00
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-Mail</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Nachricht</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="cta-button">Nachricht senden</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#" title="Instagram">📷</a>
+                <a href="#" title="Facebook">f</a>
+                <a href="#" title="Twitter">𝕏</a>
+            </div>
+            <div class="footer-text">
+                <p>&copy; 2024 Kaffeekult. Alle Rechte vorbehalten. | Handwerklich gebrüht seit 2015</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.getElementById('navOverlay');
+        const body = document.body;
+
+        function toggleMenu() {
+            const isActive = navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            body.classList.toggle('menu-open');
+            menuToggle.innerText = isActive ? '✕' : '☰';
+        }
+
+        function closeMenu() {
+            navLinks.classList.remove('active');
+            navOverlay.classList.remove('active');
+            body.classList.remove('menu-open');
+            menuToggle.innerText = '☰';
+        }
+
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMenu();
+        });
+
+        navOverlay.addEventListener('click', closeMenu);
+
+        // Schließen bei Klick auf Link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Schließen bei Escape-Taste
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeMenu();
+        });
+
+        // Intersection Observer für Scroll-Effekte
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.product-item, .gallery-item').forEach(el => {
+            el.classList.add('fade-in');
+            observer.observe(el);
+        });
+
+        // Formular-Handling
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Vielen Dank für Ihre Nachricht!');
+            e.target.reset();
+        });
+
+        // Header scroll effect
+        const header = document.querySelector('header');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            header.style.borderBottomColor = scrollTop > 100
+                ? 'rgba(175, 179, 183, 0.4)'
+                : 'rgba(175, 179, 183, 0.2)';
+        });
+    </script>
+</body>
+</html>
