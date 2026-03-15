@@ -836,58 +836,58 @@
 
     <!-- Contact Section -->
     <section class="contact" id="contact">
-        <h2 class="section-title">Kontakt & Besuch</h2>
-        <div class="contact-content">
-            <div class="contact-info">
-                <h3>Besuch uns</h3>
-                <div class="contact-item">
-                    <div class="contact-item-label">Adresse</div>
-                    <div class="contact-item-value">Kreuzberg Str. 42<br>10965 Berlin, Deutschland</div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-item-label">Telefon</div>
-                    <div class="contact-item-value">+49 (30) 123-456789</div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-item-label">E-Mail</div>
-                    <div class="contact-item-value">hello@kaffeekult.de</div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-item-label">Öffnungszeiten</div>
-                    <div class="contact-item-value">
-                        Mo-Fr: 7:00 - 20:00<br>
-                        Sa-So: 9:00 - 19:00
-                    </div>
+    <h2 class="section-title">Kontakt & Besuch</h2>
+    <div class="contact-content">
+        <div class="contact-info">
+            <h3>Besuch uns</h3>
+            <div class="contact-item">
+                <div class="contact-item-label">Adresse</div>
+                <div class="contact-item-value">Neuendorfer Weg 10a<br>17440 Lütow, Deutschland</div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-item-label">Telefon</div>
+                <div class="contact-item-value">+49 (038377) 372370</div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-item-label">E-Mail</div>
+                <div class="contact-item-value">info[AT]parkraumtechnik.de</div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-item-label">Öffnungszeiten</div>
+                <div class="contact-item-value">
+                    Mo-Do: 8:00 - 14:00<br>
+                    Fr: 8:00 - 12:00
                 </div>
             </div>
-            <form class="contact-form" id="contactForm">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">E-Mail</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Nachricht</label>
-                    <textarea id="message" name="message" required></textarea>
-                </div>
-                <button type="submit" class="cta-button">Nachricht senden</button>
-            </form>
         </div>
-    </section>
+
+        <form class="contact-form" id="contactForm" action="send_mail.php" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-Mail</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Nachricht</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="cta-button">Nachricht senden</button>
+        </form>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="social-links">
-                <a href="#" title="Instagram">📷</a>
-                <a href="#" title="Facebook">f</a>
-                <a href="#" title="Twitter">𝕏</a>
+                <a href="#">Impressum</a>
+                <a href="#" title="Datenschutz">Datenschutz</a>
             </div>
             <div class="footer-text">
-                <p>&copy; 2024 Kaffeekult. Alle Rechte vorbehalten. | Handwerklich gebrüht seit 2015</p>
+                <p>&copy; 2016 Parkraum- & Versorgungstechnik Vorpommern UG (haftungsbeschränkt)</p>
             </div>
         </div>
     </footer>
@@ -916,20 +916,20 @@
         menuToggle.addEventListener('click', toggleMenu);
 
         // Close menu when link is clicked
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', (e) => {
-        const targetId = link.getAttribute('href');
-        if(targetId.startsWith('#')) {
-            // Scrollen zuerst
-            document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
-            // Menü nach kurzer Verzögerung schließen
-            setTimeout(closeMenu, 300); // 300ms, passt zum scroll
-            e.preventDefault(); // Standard-Scroll verhindern, wir machen es manuell
-        } else {
-            closeMenu();
-        }
-    });
-});
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const targetId = link.getAttribute('href');
+                if(targetId.startsWith('#')) {
+                    // Scrollen zuerst
+                    document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+                    // Menü nach kurzer Verzögerung schließen
+                    setTimeout(closeMenu, 300); // 300ms, passt zum scroll
+                    e.preventDefault(); // Standard-Scroll verhindern, wir machen es manuell
+                } else {
+                    closeMenu();
+                }
+            });
+        });
 
         navOverlay.addEventListener('click', closeMenu);
 
@@ -959,11 +959,10 @@ document.querySelectorAll('.nav-links a').forEach(link => {
             observer.observe(el);
         });
 
-        // Form submission
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Vielen Dank für deine Nachricht! Wir werden dich bald kontaktieren.');
-            document.getElementById('contactForm').reset();
+        // Form submission - Jetzt wird die Nachricht wirklich an das PHP geschickt
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            // Wir entfernen e.preventDefault(), damit die Daten an send_mail.php gesendet werden
+            // Der Browser leitet den Nutzer nun nach dem Klick automatisch weiter
         });
 
         // Header scroll effect
