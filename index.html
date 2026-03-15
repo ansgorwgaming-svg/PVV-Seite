@@ -878,7 +878,7 @@
 
     <script>
         // Mobile Menu Toggle
-        const menuToggle = document.getElementById('menuToggle');
+const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.querySelector('.nav-links');
 const navOverlay = document.getElementById('navOverlay');
 
@@ -896,54 +896,49 @@ function closeMenu() {
     menuToggle.innerText = '☰';
 }
 
-// Öffnen/Schließen über den Button
-menuToggle.addEventListener('click', (e) => {
-    e.preventDefault();
-    toggleMenu();
-});
+// Event Listener
+if (menuToggle) {
+    menuToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleMenu();
+    });
+}
 
-// Schließen über das Overlay
-navOverlay.addEventListener('click', closeMenu);
+if (navOverlay) {
+    navOverlay.addEventListener('click', closeMenu);
+}
 
 // Schließen beim Klick auf einen Link (NUR im mobilen Modus)
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
-        // Prüft ob wir gerade in der mobilen Ansicht sind (Menü ist aktiv)
         if (window.innerWidth <= 768) {
             closeMenu();
         }
     });
 });
 
-        // Intersection Observer für Scroll-Effekte
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, observerOptions);
+// Scroll Animation
+const observerOptions = { threshold: 0.1 };
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+}, observerOptions);
 
-        document.querySelectorAll('.product-item, .gallery-item').forEach(el => {
-            el.classList.add('fade-in');
-            observer.observe(el);
-        });
+document.querySelectorAll('.product-item, .gallery-item').forEach(el => {
+    el.classList.add('fade-in');
+    observer.observe(el);
+});
 
-        // Formular-Handling
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Vielen Dank für Ihre Nachricht!');
-            e.target.reset();
-        });
-
-        // Header scroll effect
-        const header = document.querySelector('header');
-
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            header.style.borderBottomColor = scrollTop > 100
-                ? 'rgba(175, 179, 183, 0.4)'
-                : 'rgba(175, 179, 183, 0.2)';
-        });
+// Formular-Handling
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Vielen Dank für Ihre Nachricht!');
+        e.target.reset();
+    });
+}
     </script>
 </body>
 </html>
