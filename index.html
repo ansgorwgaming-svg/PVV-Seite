@@ -540,19 +540,19 @@
         cursor: pointer;
     }
     .nav-links {
+        display: flex; /* Sicherstellen, dass es angezeigt wird */
         position: fixed;
         top: 0;
         right: 0;
         height: 100vh;
         width: 280px;
-        background: #0c0c0c; /* Deine Hintergrundfarbe */
-        flex-direction: column;
-        padding: 80px 0 2rem; /* Platz für den X-Button oben */
-        gap: 0;
+        background: #0c0c0c;
         transform: translateX(100%);
         transition: transform 0.3s ease-in-out;
-        z-index: 3000; /* Sicherstellen, dass dies ganz oben liegt */
-        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        z-index: 3000; /* Muss über dem Overlay (2500) liegen */
+        padding-top: 80px;
+        flex-direction: column;
+        gap: 0;
     }
 
     .nav-links.active {
@@ -565,10 +565,10 @@
 
     .nav-links a {
         display: block;
-        padding: 1.2rem 2.5rem; /* Große Klickfläche für Daumen */
         width: 100%;
-        font-size: 1.2rem;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
+        padding: 1.5rem 2rem;
+        color: white;
+        text-decoration: none;
     }
 
     /* Das Overlay muss unter den Links, aber über dem Content liegen */
@@ -879,40 +879,41 @@
     <script>
         // Mobile Menu Toggle
         const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.querySelector('.nav-links');
-        const navOverlay = document.getElementById('navOverlay');
-        const body = document.body;
+const navLinks = document.querySelector('.nav-links');
+const navOverlay = document.getElementById('navOverlay');
 
-        function toggleMenu() {
-            const isActive = navLinks.classList.toggle('active');
-            navOverlay.classList.toggle('active');
-            body.classList.toggle('menu-open');
-            menuToggle.innerText = isActive ? '✕' : '☰';
+function toggleMenu() {
+    const isActive = navLinks.classList.toggle('active');
+    navOverlay.classList.toggle('active');
+    document.body.classList.toggle('menu-open');
+    menuToggle.innerText = isActive ? '✕' : '☰';
+}
+
+function closeMenu() {
+    navLinks.classList.remove('active');
+    navOverlay.classList.remove('active');
+    document.body.classList.remove('menu-open');
+    menuToggle.innerText = '☰';
+}
+
+// Öffnen/Schließen über den Button
+menuToggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleMenu();
+});
+
+// Schließen über das Overlay
+navOverlay.addEventListener('click', closeMenu);
+
+// Schließen beim Klick auf einen Link (NUR im mobilen Modus)
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        // Prüft ob wir gerade in der mobilen Ansicht sind (Menü ist aktiv)
+        if (window.innerWidth <= 768) {
+            closeMenu();
         }
-
-        function closeMenu() {
-            navLinks.classList.remove('active');
-            navOverlay.classList.remove('active');
-            body.classList.remove('menu-open');
-            menuToggle.innerText = '☰';
-        }
-
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMenu();
-        });
-
-        navOverlay.addEventListener('click', closeMenu);
-
-        // Schließen bei Klick auf Link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', closeMenu);
-        });
-
-        // Schließen bei Escape-Taste
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') closeMenu();
-        });
+    });
+});
 
         // Intersection Observer für Scroll-Effekte
         const observerOptions = { threshold: 0.1 };
