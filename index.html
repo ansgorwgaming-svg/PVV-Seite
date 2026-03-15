@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PVV</title>
     <style>
        * {
@@ -28,6 +28,8 @@
 
         html {
             scroll-behavior: smooth;
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         body {
@@ -36,6 +38,7 @@
             color: var(--text-light);
             line-height: 1.6;
             overflow-x: hidden;
+            max-width: 100%;
         }
 
         /* Header & Navigation */
@@ -306,6 +309,14 @@
 
         /* Responsive Mobile Menu */
         @media (max-width: 768px) {
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+
             .menu-toggle {
                 display: flex;
                 align-items: center;
@@ -317,7 +328,7 @@
                 background: rgba(255, 255, 255, 0.06);
                 cursor: pointer;
                 position: relative;
-                z-index: 4200;
+                z-index: 5200;
                 transition: var(--transition);
             }
 
@@ -353,12 +364,12 @@
                 padding: 5.5rem 2rem 2rem;
                 gap: 1.5rem;
                 flex-direction: column;
-                background: rgba(16, 18, 20, 0.82);
+                background: rgba(16, 18, 20, 0.96);
                 backdrop-filter: blur(18px);
-                border-left: 1px solid rgba(255, 255, 255, 0.08);
+                border-left: 1px solid rgba(255, 255, 255, 0.12);
                 transform: translateX(100%);
                 transition: transform 0.35s cubic-bezier(0.2, 0.65, 0.3, 1);
-                z-index: 4000;
+                z-index: 5000;
                 box-shadow: -12px 0 40px rgba(0, 0, 0, 0.6);
             }
 
@@ -385,7 +396,7 @@
                 inset: 0;
                 background: rgba(0, 0, 0, 0.6);
                 backdrop-filter: blur(2px);
-                z-index: 3900;
+                z-index: 4800;
                 opacity: 0;
                 visibility: hidden;
                 transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -429,7 +440,7 @@
 </div>
                 <ul class="nav-links" id="main-nav">
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#about">Wilkommen</a></li>
+                    <li><a href="#about">Willkommen</a></li>
                     <li><a href="#product">Produkte</a></li>
                     <li><a href="#gallery">Galerie</a></li>
                     <li><a href="#contact">Kontakt</a></li>
@@ -446,7 +457,7 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <h1>Parkraum- & Versorgungstechnik Vorpommern</h1>
-            <p style="color: red;">debug: v.1.4</p>
+            <p style="color: red;">debug: v.1.5</p>
             <a href="#product" class="cta-button">Produkte ansehen</a>
             <a href="#contact" class="cta-button outline">Kontakt</a>
         </div>
@@ -454,7 +465,7 @@
 
     <!-- About Section -->
     <section class="about" id="about">
-        <h2 class="section-title">Wilkommen</h2>
+        <h2 class="section-title">Willkommen</h2>
         <div class="about-content">
             <div class="about-text">
                 <h3>Herzlich Willkommen auf der Homepage der Firma Parkraum- & Versorgungstechnik Vorpommern GmbH </h3>
@@ -477,7 +488,7 @@
                 </p>
             </div>
             <div class="about-image">
-                <img src="https://www.parkraum-versorgungstechnik.de/upload/startseite/willkommen.jpg" alt="Wilkommen">
+                <img src="https://www.parkraum-versorgungstechnik.de/upload/startseite/willkommen.jpg" alt="Willkommen">
             </div>
         </div>
     </section>
