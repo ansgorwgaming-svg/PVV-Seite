@@ -528,85 +528,79 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .nav-links {
-                display: flex;
-                position: fixed;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                width: 280px;
-                flex-direction: column;
-                background: rgba(12, 12, 12, 0.95);
-                padding: 5rem 1.5rem 2rem;
-                gap: 1.5rem;
-                transform: translateX(100%);
-                transition: transform 0.35s ease;
-                z-index: 1120;
-                box-shadow: -12px 0 30px rgba(0, 0, 0, 0.55);
-            }
+    .nav-links {
+        display: flex;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 280px;
+        flex-direction: column;
+        background: rgba(12, 12, 12, 0.98); /* Etwas dunkler für bessere Lesbarkeit */
+        padding: 5rem 0 2rem; /* Padding links/rechts entfernt, machen wir im Link */
+        gap: 0; /* Gap auf 0, damit wir Abstände über Padding steuern */
+        transform: translateX(100%);
+        transition: transform 0.35s ease;
+        z-index: 1120;
+        box-shadow: -12px 0 30px rgba(0, 0, 0, 0.55);
+        list-style: none;
+    }
 
-            .nav-links.active {
-                transform: translateX(0);
-            }
+    /* NEU: Jeder Listenpunkt nimmt die volle Breite ein */
+    .nav-links li {
+        width: 100%;
+    }
 
-            body.menu-open {
-                overflow: hidden;
-            }
+    /* NEU: Das hier macht die Links klickbar! */
+    .nav-links a {
+        display: block;      /* Der Link wird zum Rechteck */
+        width: 100%;         /* Volle Breite des Menüs */
+        padding: 1.2rem 2rem; /* Große Trefferfläche für den Daumen */
+        font-size: 1.2rem;
+        border-bottom: 1px solid rgba(255,255,255,0.05); /* Optische Trennung */
+    }
 
-            .nav-overlay {
-                position: fixed;
-                inset: 0;
-                background: rgba(0, 0, 0, 0.5);
-                opacity: 0;
-                visibility: hidden;
-                transition: opacity 0.35s ease, visibility 0.35s ease;
-                z-index: 1050;
-            }
+    .nav-links.active {
+        transform: translateX(0);
+    }
 
-            .nav-overlay.active {
-                opacity: 1;
-                visibility: visible;
-            }
+    body.menu-open {
+        overflow: hidden;
+    }
 
-            .menu-toggle {
-                display: block;
-                position: relative;
-                z-index: 1110;
-                transition: transform 0.3s ease;
-            }
+    .nav-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.35s ease, visibility 0.35s ease;
+        z-index: 1050;
+    }
 
-            .menu-toggle.active {
-                transform: rotate(90deg);
-            }
+    .nav-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
 
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+    .menu-toggle {
+        display: block;
+        position: relative;
+        z-index: 1200; /* Höher als die nav-links */
+        transition: transform 0.3s ease;
+    }
 
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-content {
-                grid-template-columns: 1fr;
-            }
-
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+    /* Der Rest bleibt gleich */
+    .hero h1 { font-size: 2.2rem; }
+    .hero p { font-size: 1.1rem; }
+    .section-title { font-size: 2rem; }
+    .about-content, .contact-content, .product-grid {
+        grid-template-columns: 1fr;
+    }
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
         @media (max-width: 480px) {
             nav {
@@ -915,24 +909,24 @@
 
         menuToggle.addEventListener('click', toggleMenu);
 
-       // Close menu when link is clicked
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', (e) => {
-            // 1. Menü sofort schließen (wichtig für Mobile)
-            closeMenu();
-        
-            const targetId = link.getAttribute('href');
-        
-            // 2. Nur wenn es ein Anker-Link ist (#...)
-            if(targetId.startsWith('#')) {
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    // Verhindert das "Springen", erlaubt weiches Scrollen
-                    e.preventDefault();
+       // Korrigierter Klick-Mechanismus für Mobile
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', (e) => {
+        const targetId = link.getAttribute('href');
+
+        if (targetId.startsWith('#')) {
+            e.preventDefault(); // Verhindert das Standard-Springen
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                // Erst scrollen
                 targetElement.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
+                    behavior: 'smooth' 
                 });
+                
+                // Menü erst nach einer winzigen Verzögerung schließen, 
+                // damit das Event nicht abgebrochen wird
+                setTimeout(closeMenu, 150);
             }
         }
     });
