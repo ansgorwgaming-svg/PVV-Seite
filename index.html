@@ -527,55 +527,49 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
+        /* Ersetze/Ergänze diesen Teil in deinem Media Query */
+@media (max-width: 768px) {
     .nav-links {
-        display: flex;
         position: fixed;
         top: 0;
-        bottom: 0;
         right: 0;
+        height: 100vh;
         width: 280px;
+        background: #0c0c0c; /* Deine Hintergrundfarbe */
         flex-direction: column;
-        background: rgba(12, 12, 12, 0.98); /* Etwas dunkler für bessere Lesbarkeit */
-        padding: 5rem 0 2rem; /* Padding links/rechts entfernt, machen wir im Link */
-        gap: 0; /* Gap auf 0, damit wir Abstände über Padding steuern */
+        padding: 80px 0 2rem; /* Platz für den X-Button oben */
+        gap: 0;
         transform: translateX(100%);
-        transition: transform 0.35s ease;
-        z-index: 1120;
-        box-shadow: -12px 0 30px rgba(0, 0, 0, 0.55);
-        list-style: none;
-    }
-
-    /* NEU: Jeder Listenpunkt nimmt die volle Breite ein */
-    .nav-links li {
-        width: 100%;
-    }
-
-    /* NEU: Das hier macht die Links klickbar! */
-    .nav-links a {
-        display: block;      /* Der Link wird zum Rechteck */
-        width: 100%;         /* Volle Breite des Menüs */
-        padding: 1.2rem 2rem; /* Große Trefferfläche für den Daumen */
-        font-size: 1.2rem;
-        border-bottom: 1px solid rgba(255,255,255,0.05); /* Optische Trennung */
+        transition: transform 0.3s ease-in-out;
+        z-index: 3000; /* Sicherstellen, dass dies ganz oben liegt */
+        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
     }
 
     .nav-links.active {
         transform: translateX(0);
     }
 
-    body.menu-open {
-        overflow: hidden;
+    .nav-links li {
+        width: 100%;
     }
 
+    .nav-links a {
+        display: block;
+        padding: 1.2rem 2.5rem; /* Große Klickfläche für Daumen */
+        width: 100%;
+        font-size: 1.2rem;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* Das Overlay muss unter den Links, aber über dem Content liegen */
     .nav-overlay {
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.7);
+        background: rgba(0,0,0,0.7);
+        z-index: 2500; 
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.35s ease, visibility 0.35s ease;
-        z-index: 1050;
+        transition: all 0.3s ease;
     }
 
     .nav-overlay.active {
@@ -583,22 +577,8 @@
         visibility: visible;
     }
 
-    .menu-toggle {
-        display: block;
-        position: relative;
-        z-index: 1200; /* Höher als die nav-links */
-        transition: transform 0.3s ease;
-    }
-
-    /* Der Rest bleibt gleich */
-    .hero h1 { font-size: 2.2rem; }
-    .hero p { font-size: 1.1rem; }
-    .section-title { font-size: 2rem; }
-    .about-content, .contact-content, .product-grid {
-        grid-template-columns: 1fr;
-    }
-    .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
+    body.menu-open {
+        overflow: hidden; /* Verhindert Scrollen im Hintergrund */
     }
 }
 
@@ -667,7 +647,7 @@
                 </ul>
                         <button class="menu-toggle" id="menuToggle" aria-label="Navigation öffnen" aria-expanded="false" aria-controls="main-nav">☰</button>        </nav>
     </header>
-
+<div class="nav-overlay" id="navOverlay"></div>
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
@@ -889,45 +869,33 @@
     <script>
         // Mobile Menu Toggle
         const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.querySelector('.nav-links');
-        const body = document.body;
+const navLinks = document.querySelector('.nav-links'); // Falls deine ID anders ist, hier anpassen
+const navOverlay = document.getElementById('navOverlay');
+const body = document.body;
 
-        const navOverlay = document.createElement('div');
-        navOverlay.className = 'nav-overlay';
-        document.body.appendChild(navOverlay);
+function toggleMenu() {
+    const isActive = navLinks.classList.toggle('active');
+    navOverlay.classList.toggle('active');
+    body.classList.toggle('menu-open');
+    
+    // Ändert das Icon von Burger zu X
+    menuToggle.innerText = isActive ? '✕' : '☰';
+}
 
-        const setMenuState = (isOpen) => {
-            navLinks.classList.toggle('active', isOpen);
-            menuToggle.classList.toggle('active', isOpen);
-            body.classList.toggle('menu-open', isOpen);
-            navOverlay.classList.toggle('active', isOpen);
-            menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        };
+// Event Listener für den Button
+menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMenu();
+});
 
-        const closeMenu = () => setMenuState(false);
-        const toggleMenu = () => setMenuState(!navLinks.classList.contains('active'));
+// Schließen beim Klick auf das dunkle Overlay
+navOverlay.addEventListener('click', toggleMenu);
 
-        menuToggle.addEventListener('click', toggleMenu);
-
-       // Korrigierter Klick-Mechanismus für Mobile
+// WICHTIG: Schließen beim Klick auf einen Link
 document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', (e) => {
-        const targetId = link.getAttribute('href');
-
-        if (targetId.startsWith('#')) {
-            e.preventDefault(); // Verhindert das Standard-Springen
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                // Erst scrollen
-                targetElement.scrollIntoView({ 
-                    behavior: 'smooth' 
-                });
-                
-                // Menü erst nach einer winzigen Verzögerung schließen, 
-                // damit das Event nicht abgebrochen wird
-                setTimeout(closeMenu, 150);
-            }
+    link.addEventListener('click', () => {
+        if (navLinks.classList.contains('active')) {
+            toggleMenu();
         }
     });
 });
