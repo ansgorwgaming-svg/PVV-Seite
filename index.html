@@ -13,13 +13,13 @@
         /* accent-gold = text color */
         /* Color Palette: Neutral Warm Gray Theme */
         :root {
-            --primary-dark: #12100f;
-            --primary-grey: #5b5f63;
-            --accent-gold: #ed8403;
-            --accent-warm: #c4c9ce;
-            --text-light: #f5f1ed;
-            --text-muted: #a3a9ae;
-            --bg-dark: #0c0c0c;
+            --primary-dark: #12100f; /* Dark background color */
+            --primary-grey: #5b5f63; /* Main text color */
+            --accent-gold: #ed8403; /* Accent color for highlights and buttons */
+            --accent-warm: #c4c9ce; /* Secondary accent for hover states and borders */
+            --text-light: #f5f1ed; /* Light text color for headings and important elements */
+            --text-muted: #a3a9ae; /* Muted text color for descriptions and less important info */
+            --bg-dark: #0c0c0c; /* Main background color */
             --border-strong: rgba(175, 179, 183, 0.2);
             --overlay-light: rgba(110, 113, 118, 0.4);
             --overlay-dark: rgba(22, 24, 26, 0.6);
@@ -44,7 +44,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: linear-gradient(180deg, rgba(22, 24, 26, 0.95) 0%, rgba(22, 24, 26, 0.7) 100%);
+            background: linear-gradient(180deg, rgba(108, 117, 125, 0.95) 0%, rgba(22, 24, 26, 0.7) 100%);
             backdrop-filter: blur(10px);
             z-index: 1000;
             border-bottom: 1px solid var(--border-strong);
@@ -179,19 +179,30 @@
         }
 
         .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: linear-gradient(135deg, var(--accent-gold), var(--accent-warm));
-            color: var(--primary-dark);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: var(--transition);
-            border: 2px solid transparent;
-            cursor: pointer;
-            box-shadow: 0 10px 30px var(--shadow);
-        }
+        display: inline-block;
+        padding: 1rem 2.5rem;
+        /* FIX 1: Hintergrund auf padding-box begrenzen */
+        background: linear-gradient(135deg, var(--accent-gold), var(--accent-warm)) padding-box;
+        color: var(--primary-dark);
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: var(--transition);
+        
+        /* FIX 2: Entferne 'transparent' und nutze 'none' oder eine feste Farbe */
+        border: none; 
+        
+        /* FIX 3: Verhindert, dass der Verlauf über die Rundung "blutet" */
+        overflow: hidden;
+        
+        cursor: pointer;
+        box-shadow: 0 10px 30px var(--shadow);
+        
+        /* FIX 4: Sorgt für saubere Kanten-Glättung */
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+    }
 
         .cta-button:hover {
             transform: translateY(-3px);
@@ -412,6 +423,42 @@
             font-weight: 600;
         }
 
+        /* Anfahrt Section */
+        .map-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 500px; /* Feste Höhe, damit es nicht mehr so leer aussieht */
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid var(--border-strong);
+    background: var(--primary-dark);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    .map-placeholder {
+        text-align: center;
+        padding: 2rem;
+        z-index: 2;
+    }
+
+    .map-placeholder p {
+        margin-bottom: 1.5rem;
+        color: var(--text-muted);
+    }
+
+    .map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+        
         /* Contact Section */
         .contact {
             background: var(--primary-dark);
@@ -669,6 +716,7 @@
                 <li><a href="#about" style="color: #6d72ffdd; font-weight: bold;">Wilkommen</a></li>
                 <li><a href="#product" style="color: #6d72ffdd; font-weight: bold;">Produkte</a></li>
                 <li><a href="#gallery" style="color: #6d72ffdd; font-weight: bold;">Galerie</a></li>
+                <li><a href="#anfahrt" style="color: #6d72ffdd; font-weight: bold;">Anfahrt</a></li>
                 <li><a href="#contact" style="color: #6d72ffdd; font-weight: bold;">Kontakt</a></li>
                 </ul>
                         <button class="menu-toggle" id="menuToggle" aria-label="Navigation öffnen" aria-expanded="false" aria-controls="main-nav">☰</button>        </nav>
@@ -833,6 +881,17 @@
             -->
         </div>
     </section>
+     
+    <section class="anfahrt" id="anfahrt">
+      <h2 class="section-title">Anfahrt</h2>
+        <div class="map-container" id="map-box">
+            <div class="map-placeholder">
+                <p>Um die Karte zu sehen, bestätigen Sie bitte die Verbindung zu Google Maps.</p>
+                <button class="cta-button" onclick="loadMap()">Karte laden</button>
+            </div>
+        </div>
+    </section>
+
 
     <!-- Contact Section -->
     <section class="contact" id="contact">
@@ -949,6 +1008,14 @@
             // damit der Nutzer nicht doppelt klickt.
             this.querySelector('button').innerText = 'Wird gesendet...';
         });
+        // 3. Google Maps Logik
+        function loadMap() {
+        const mapBox = document.getElementById('map-box');
+        // Ersetze URL unten mit deinem Google Maps Link
+        const mapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d586.0875772063278!2d13.877858569666712!3d54.014306698280656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47ab011234c416df%3A0x6daebfe21e1fb77c!2sNeuendorfer%20Weg%2010a%2C%2017440%20L%C3%BCtow!5e0!3m2!1sde!2sde!4v1773673812847!5m2!1sde!2sde";
+        
+        mapBox.innerHTML = `<iframe src="${mapUrl}" allowfullscreen="" loading="lazy"></iframe>`;
+        }
     </script>
 </body>
 </html>
