@@ -860,26 +860,25 @@
                 </div>
             </div>
         </div>
-
-        <form class="contact-form" action="https://formspree.io/f/xzdjaokj" method="POST">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Deine E-Mail</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="message">Nachricht</label>
-                <textarea id="message" name="message" required></textarea>
-            </div>
-            <input type="text" name="_gotcha" style="display:none">
-            
-            <button type="submit" class="cta-button">Nachricht senden</button>
-        </form>
-    </div>
-</section>
+            <form class="contact-form" action="https://formspree.io/f/xzdjaokj" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Deine E-Mail</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Nachricht</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <input type="text" name="_gotcha" style="display:none">
+                
+                <button type="submit" class="cta-button">Nachricht senden</button>
+            </form>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -895,39 +894,61 @@
     </footer>
 
     <script>
-        // 1. Navigation & Mobile Menu Logik
-const menuBtn = document.querySelector('.menu-btn');
-const navLinks = document.querySelector('.nav-links');
-const navOverlay = document.querySelector('.nav-overlay');
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.querySelector('.nav-links');
+        const body = document.body;
 
-// Funktion zum Umschalten des Menüs
-function toggleMenu() {
-    menuBtn.classList.toggle('active');
-    navLinks.classList.toggle('active');
-    navOverlay.classList.toggle('active'); // Hier wird das Overlay gesteuert
-}
+        const navOverlay = document.createElement('div');
+        navOverlay.className = 'nav-overlay';
+        document.body.appendChild(navOverlay);
 
-menuBtn.addEventListener('click', toggleMenu);
-navOverlay.addEventListener('click', toggleMenu);
+        const setMenuState = (isOpen) => {
+            navLinks.classList.toggle('active', isOpen);
+            menuToggle.classList.toggle('active', isOpen);
+            body.classList.toggle('menu-open', isOpen);
+            navOverlay.classList.toggle('active', isOpen);
+            menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        };
 
-// Menü schließen, wenn ein Link geklickt wird
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        menuBtn.classList.remove('active');
-        navLinks.classList.remove('active');
-        navOverlay.classList.remove('active');
-    });
-});
+        const closeMenu = () => setMenuState(false);
+        const toggleMenu = () => setMenuState(!navLinks.classList.contains('active'));
 
-// 2. Formular Logik
-// Wir fügen hier KEIN e.preventDefault() ein, 
-// damit die Weiterleitung zu Formspree funktioniert.
-document.getElementById('contactForm').addEventListener('submit', function() {
-    console.log("Formular wird an Formspree gesendet...");
-    // Optional: Hier könntest du den Button deaktivieren, 
-    // damit der Nutzer nicht doppelt klickt.
-    this.querySelector('button').innerText = 'Wird gesendet...';
-});
+        menuToggle.addEventListener('click', toggleMenu);
+
+        // Close menu when link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const targetId = link.getAttribute('href');
+                if(targetId.startsWith('#')) {
+                    // Scrollen zuerst
+                    document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+                    // Menü nach kurzer Verzögerung schließen
+                    setTimeout(closeMenu, 300); // 300ms, passt zum scroll
+                    e.preventDefault(); // Standard-Scroll verhindern, wir machen es manuell
+                } else {
+                    closeMenu();
+                }
+            });
+        });
+
+        navOverlay.addEventListener('click', closeMenu);
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeMenu();
+            }
+        });
+
+        // 2. Formular Logik
+        // Wir fügen hier KEIN e.preventDefault() ein, 
+        // damit die Weiterleitung zu Formspree funktioniert.
+        document.getElementById('contactForm').addEventListener('submit', function() {
+            console.log("Formular wird an Formspree gesendet...");
+            // Optional: Hier könntest du den Button deaktivieren, 
+            // damit der Nutzer nicht doppelt klickt.
+            this.querySelector('button').innerText = 'Wird gesendet...';
+        });
     </script>
 </body>
 </html>
