@@ -5,6 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PVV</title>
     <style>
+        /* Der dunkle Hintergrund (Overlay) für impressum und datenschutz */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 2000; /* Höher als der Header */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.8);
+            animation: fadeInUp 0.4s ease-out; /* Nutzt deine vorhandene Animation */
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .close-btn:hover { color: var(--accent-gold); }
+
+        /* Button unten */
+        #closeModalBtn {
+        background: #333;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -941,23 +987,93 @@
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="social-links">
-                <a href="#">Impressum</a>
-                <a href="#" title="Datenschutz">Datenschutz</a>
+    <div class="footer-content">
+        <div class="social-links">
             </div>
-            <div class="footer-text">
-                <p>&copy; 2016 Parkraum- & Versorgungstechnik Vorpommern UG (haftungsbeschränkt)</p>
+        <p class="footer-text">
+            © 2024 Parkraum- & Versorgungstechnik Vorpommern GmbH<br><br>
+            <a href="javascript:void(0)" onclick="openModal('impressumModal')" style="color: var(--text-muted); text-decoration: none;">Impressum</a> | 
+            <a href="javascript:void(0)" onclick="openModal('datenschutzModal')" style="color: var(--text-muted); text-decoration: none;">Datenschutz</a>
+        </p>
+    </div>
+</footer>
+
+    <div id="impressumModal" class="modal">
+        <div class="modal-content" style="background: var(--bg-dark); border: 1px solid var(--border-strong); overflow-y: auto; max-height: 80vh;">
+            <span class="close-btn" onclick="closeModal('impressumModal')">&times;</span>
+            <h2 style="color: var(--accent-gold); margin-bottom: 20px;">Impressum</h2>
+            <div style="text-align: left; color: var(--text-light);">
+                <p><strong>Parkraum- & Versorgungstechnik Vorpommern GmbH</strong></p><br>
+                <p>Neuendorfer Weg 10a<br>17440 Lütow</p> <br>
+                <p>Tel.: (038377) 372370<br>Fax: (038377) 373373</p><br>
+                <p>Verantwortlich für den Inhalt: Ing. Thomas Bredereck B. Eng.</p><br>
+                <p>Wir übernehmen für die Informationen und Angebote dieser Webseite keine Haftung.
+                   Die Angebote und Informationen dieser Webseite sind unverbindlich und erheben keinen Anspruch auf Vollständigkeit.</p><br>
+                <p>Hiermit wird ausdrücklich erklärt, dass wir keinerlei Einfluss auf die Gestaltung und Inhalte der gelinkten / verknüpften Seiten haben.
+                   Deshalb distanzieren wir uns hiermit ausdrücklich davon.</p>
             </div>
         </div>
-    </footer>
+    </div>
+
+    <div id="datenschutzModal" class="modal">
+        <div class="modal-content" style="background: var(--bg-dark); border: 1px solid var(--border-strong); overflow-y: auto; max-height: 80vh;">
+            <span class="close-btn" onclick="closeModal('datenschutzModal')">&times;</span>
+            <h2 style="color: var(--accent-gold); margin-bottom: 20px;">Datenschutzerklärung</h2>
+            <div style="text-align: left; color: var(--text-light); font-size: 0.9rem;">
+                <p><strong>Parkraum- & Versorgungstechnik Vorpommern GmbH</strong></p><br>
+                <p>Neuendorfer Weg 10a<br>17440 Lütow</p> <br>
+                <p>Tel.: (038377) 372370<br>Fax: (038377) 373373</p><br>
+                <p>Verantwortlich für den Inhalt: Ing. Thomas Bredereck B. Eng.</p><br>
+                <p>Wir übernehmen für die Informationen und Angebote dieser Webseite keine Haftung.
+                   Die Angebote und Informationen dieser Webseite sind unverbindlich und erheben keinen Anspruch auf Vollständigkeit.</p><br>
+                <p>Hiermit wird ausdrücklich erklärt, dass wir keinerlei Einfluss auf die Gestaltung und Inhalte der gelinkten / verknüpften Seiten haben.
+                   Deshalb distanzieren wir uns hiermit ausdrücklich davon.</p>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // Mobile Menu Toggle
+        // --- Modal Logik (Impressum & Datenschutz) ---
+
+        // Funktion zum Öffnen eines Modals
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = "block";
+                document.body.style.overflow = "hidden"; // Verhindert Scrollen im Hintergrund
+            }
+        }
+
+        // Funktion zum Schließen eines Modals
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        }
+
+        // Event-Listener für alle Schließen-Buttons (Klasse .close-btn)
+        document.querySelectorAll('.close-btn').forEach(btn => {
+            btn.onclick = function() {
+                const modal = btn.closest('.modal');
+                closeModal(modal.id);
+            }
+        });
+
+        // Schließen bei Klick außerhalb des Fensters (Overlay)
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(event.target.id);
+            }
+        };
+
+        // --- Mobile Menu Toggle ---
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.querySelector('.nav-links');
         const body = document.body;
 
+        // Overlay für das Mobile-Menü erstellen
         const navOverlay = document.createElement('div');
         navOverlay.className = 'nav-overlay';
         document.body.appendChild(navOverlay);
@@ -975,16 +1091,17 @@
 
         menuToggle.addEventListener('click', toggleMenu);
 
-        // Close menu when link is clicked
+        // Menü schließen bei Klick auf Link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', (e) => {
                 const targetId = link.getAttribute('href');
                 if(targetId.startsWith('#')) {
-                    // Scrollen zuerst
-                    document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
-                    // Menü nach kurzer Verzögerung schließen
-                    setTimeout(closeMenu, 300); // 300ms, passt zum scroll
-                    e.preventDefault(); // Standard-Scroll verhindern, wir machen es manuell
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                        setTimeout(closeMenu, 300);
+                        e.preventDefault();
+                    }
                 } else {
                     closeMenu();
                 }
@@ -993,28 +1110,31 @@
 
         navOverlay.addEventListener('click', closeMenu);
 
+        // Escape-Taste schließt Menü oder offene Modals
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
                 closeMenu();
+                // Schließt alle offenen Modals
+                document.querySelectorAll('.modal').forEach(m => {
+                    if(m.style.display === "block") closeModal(m.id);
+                });
             }
         });
 
-        // 2. Formular Logik
-        // Wir fügen hier KEIN e.preventDefault() ein, 
-        // damit die Weiterleitung zu Formspree funktioniert.
-        document.getElementById('contactForm').addEventListener('submit', function() {
-            console.log("Formular wird an Formspree gesendet...");
-            // Optional: Hier könntest du den Button deaktivieren, 
-            // damit der Nutzer nicht doppelt klickt.
-            this.querySelector('button').innerText = 'Wird gesendet...';
-        });
-        // 3. Google Maps Logik
+        // --- 2. Formular Logik ---
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function() {
+                const btn = this.querySelector('button');
+                if (btn) btn.innerText = 'Wird gesendet...';
+            });
+        }
+
+        // --- 3. Google Maps Logik ---
         function loadMap() {
-        const mapBox = document.getElementById('map-box');
-        // Ersetze URL unten mit deinem Google Maps Link
-        const mapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d586.0875772063278!2d13.877858569666712!3d54.014306698280656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47ab011234c416df%3A0x6daebfe21e1fb77c!2sNeuendorfer%20Weg%2010a%2C%2017440%20L%C3%BCtow!5e0!3m2!1sde!2sde!4v1773673812847!5m2!1sde!2sde";
-        
-        mapBox.innerHTML = `<iframe src="${mapUrl}" allowfullscreen="" loading="lazy"></iframe>`;
+            const mapBox = document.getElementById('map-box');
+            const mapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2345.244365738!2d13.882!3d54.025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTTCsDAxJzMwLjAiTiAxM8KwNTInNTUuMiJF!5e0!3m2!1sde!2sde!4v123456789"; 
+            mapBox.innerHTML = `<iframe src="${mapUrl}" allowfullscreen="" loading="lazy" style="border:0; width:100%; height:100%;"></iframe>`;
         }
     </script>
 </body>
