@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Header -->
     <header>
         <nav>
              <div class="logo">
@@ -15,16 +16,17 @@
                         </a>
              </div>
                 <ul class="nav-links" id="main-nav">
-                <li><a href="#home" style="color: #060ca9; font-weight: bold;">Home</a></li>
-                <li><a href="#about" style="color: #060ca9; font-weight: bold;">Wilkommen</a></li>
-                <li><a href="#product" style="color: #060ca9; font-weight: bold;">Produkte</a></li>
-                <li><a href="#gallery" style="color: #060ca9; font-weight: bold;">Galerie</a></li>
-                <li><a href="#anfahrt" style="color: #060ca9; font-weight: bold;">Anfahrt</a></li>
-                <li><a href="#contact" style="color: #060ca9; font-weight: bold;">Kontakt</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">Wilkommen</a></li>
+                <li><a href="#product">Produkte</a></li>
+                <li><a href="#gallery">Galerie</a></li>
+                <li><a href="#anfahrt">Anfahrt</a></li>
+                <li><a href="#contact">Kontakt</a></li>
                 </ul>
                         <button class="menu-toggle" id="menuToggle" aria-label="Navigation öffnen" aria-expanded="false" aria-controls="main-nav">☰</button>        </nav>
     </header>
 
+    <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
             <h1>Parkraum- & Versorgungstechnik Vorpommern</h1>
@@ -34,6 +36,7 @@
         </div>
     </section>
 
+    <!-- About Section -->
     <section class="about" id="about">
         <h2 class="section-title">Wilkommen</h2>
         <div class="about-content">
@@ -63,6 +66,7 @@
         </div>
     </section>
 
+    <!-- Produkte Section -->
     <section class="product" id="product">
         <h2 class="section-title">Produkte</h2>
         <div class="product-grid">
@@ -103,14 +107,41 @@
                 <div class="product-item-content">
                     <div class="product-item-title">Notrufsäule</div>
                     <div class="product-item-description">-Notrufterminal mit Defibrillator
-                                                        und Überwachungskamera <br>
-                                                      -Verbindung zur Leitstelle
-                                                        auch ohne Netzstrom (autak) mit Solardach erhältlich</div>
+                                                            und Überwachungskamera <br>
+                                                          -Verbindung zur Leitstelle
+                                                            auch ohne Netzstrom (autak) mit Solardach erhältlich</div>
                 </div>
             </div>
+
+            <!--
+            <div class="product-item">
+                <div class="product-item-image">
+                    <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop" alt="Flat White">
+                </div>
+                <div class="product-item-content">
+                    <div class="product-item-title">Flat White</div>
+                    <div class="product-item-description">Australisches Klassiker mit samtigem Microfoam</div>
+                    <div class="product-item-price">€4,90</div>
+                </div>
+            </div>
+
+            <div class="product-item">
+                <div class="product-item-image">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop" alt="Cold Brew">
+                </div>
+                <div class="product-item-content">
+                    <div class="product-item-title">Cold Brew</div>
+                    <div class="product-item-description">Erfrischender Cold Brew – perfekt für warme Tage</div>
+                    <div class="product-item-price">€4,20</div>
+                </div>
+            </div>
+            -->
         </div>
     </section>
 
+
+
+    <!-- Gallery Section -->
     <section class="gallery" id="gallery">
         <h2 class="section-title">Galerie</h2>
         <div class="gallery-grid">
@@ -138,6 +169,20 @@
                     <div class="gallery-overlay-text">Ostseebad Zinnowitz Strandparkplatz</div>
                 </div>
             </div>
+            <!--
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1447933601403-0c6688bcf566?w=400&h=400&fit=crop" alt="Café Atmosphäre">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-text">Café Atmosphäre</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400&h=400&fit=crop" alt="Kaffee-Bohnen">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-text">Kaffee-Bohnen</div>
+                </div>
+            </div>
+            -->
         </div>
     </section>
      
@@ -151,6 +196,8 @@
         </div>
     </section>
 
+
+    <!-- Contact Section -->
     <section class="contact" id="contact">
     <h2 class="section-title">Kontakt & Besuch</h2>
     <div class="contact-content">
@@ -196,11 +243,157 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="social-links">
-                </div>
+    <div class="footer-content">
+        <div class="social-links">
+            </div>
+        <p class="footer-text">
+            © 2024 Parkraum- & Versorgungstechnik Vorpommern GmbH<br><br>
+            <a href="javascript:void(0)" onclick="openModal('impressumModal')" style="color: var(--text-muted); text-decoration: none;">Impressum</a> | 
+            <a href="javascript:void(0)" onclick="openModal('datenschutzModal')" style="color: var(--text-muted); text-decoration: none;">Datenschutz</a>
+        </p>
+    </div>
+</footer>
+
+    <div id="impressumModal" class="modal">
+        <div class="modal-content" style="background: var(--bg-dark); border: 1px solid var(--border-strong); overflow-y: auto; max-height: 80vh;">
+            <span class="close-btn" onclick="closeModal('impressumModal')">&times;</span>
+            <h2 style="color: var(--accent-gold); margin-bottom: 20px;">Impressum</h2>
+            <div style="text-align: left; color: var(--text-light);">
+                <p><strong>Parkraum- & Versorgungstechnik Vorpommern GmbH</strong></p><br>
+                <p>Neuendorfer Weg 10a<br>17440 Lütow</p> <br>
+                <p>Tel.: (038377) 372370<br>Fax: (038377) 373373</p><br>
+                <p>Verantwortlich für den Inhalt: Ing. Thomas Bredereck B. Eng.</p><br>
+                <p>Wir übernehmen für die Informationen und Angebote dieser Webseite keine Haftung.
+                   Die Angebote und Informationen dieser Webseite sind unverbindlich und erheben keinen Anspruch auf Vollständigkeit.</p><br>
+                <p>Hiermit wird ausdrücklich erklärt, dass wir keinerlei Einfluss auf die Gestaltung und Inhalte der gelinkten / verknüpften Seiten haben.
+                   Deshalb distanzieren wir uns hiermit ausdrücklich davon.</p>
+            </div>
         </div>
-    </footer>
+    </div>
+
+    <div id="datenschutzModal" class="modal">
+        <div class="modal-content" style="background: var(--bg-dark); border: 1px solid var(--border-strong); overflow-y: auto; max-height: 80vh;">
+            <span class="close-btn" onclick="closeModal('datenschutzModal')">&times;</span>
+            <h2 style="color: var(--accent-gold); margin-bottom: 20px;">Datenschutzerklärung</h2>
+            <div style="text-align: left; color: var(--text-light); font-size: 0.9rem;">
+                <p><strong>Parkraum- & Versorgungstechnik Vorpommern GmbH</strong></p><br>
+                <p>Neuendorfer Weg 10a<br>17440 Lütow</p> <br>
+                <p>Tel.: (038377) 372370<br>Fax: (038377) 373373</p><br>
+                <p>Verantwortlich für den Inhalt: Ing. Thomas Bredereck B. Eng.</p><br>
+                <p>Wir übernehmen für die Informationen und Angebote dieser Webseite keine Haftung.
+                   Die Angebote und Informationen dieser Webseite sind unverbindlich und erheben keinen Anspruch auf Vollständigkeit.</p><br>
+                <p>Hiermit wird ausdrücklich erklärt, dass wir keinerlei Einfluss auf die Gestaltung und Inhalte der gelinkten / verknüpften Seiten haben.
+                   Deshalb distanzieren wir uns hiermit ausdrücklich davon.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Modal Logik (Impressum & Datenschutz) ---
+
+        // Funktion zum Öffnen eines Modals
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = "block";
+                document.body.style.overflow = "hidden"; // Verhindert Scrollen im Hintergrund
+            }
+        }
+
+        // Funktion zum Schließen eines Modals
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        }
+
+        // Event-Listener für alle Schließen-Buttons (Klasse .close-btn)
+        document.querySelectorAll('.close-btn').forEach(btn => {
+            btn.onclick = function() {
+                const modal = btn.closest('.modal');
+                closeModal(modal.id);
+            }
+        });
+
+        // Schließen bei Klick außerhalb des Fensters (Overlay)
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(event.target.id);
+            }
+        };
+
+        // --- Mobile Menu Toggle ---
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.querySelector('.nav-links');
+        const body = document.body;
+
+        // Overlay für das Mobile-Menü erstellen
+        const navOverlay = document.createElement('div');
+        navOverlay.className = 'nav-overlay';
+        document.body.appendChild(navOverlay);
+
+        const setMenuState = (isOpen) => {
+            navLinks.classList.toggle('active', isOpen);
+            menuToggle.classList.toggle('active', isOpen);
+            body.classList.toggle('menu-open', isOpen);
+            navOverlay.classList.toggle('active', isOpen);
+            menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        };
+
+        const closeMenu = () => setMenuState(false);
+        const toggleMenu = () => setMenuState(!navLinks.classList.contains('active'));
+
+        menuToggle.addEventListener('click', toggleMenu);
+
+        // Menü schließen bei Klick auf Link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const targetId = link.getAttribute('href');
+                if(targetId.startsWith('#')) {
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                        setTimeout(closeMenu, 300);
+                        e.preventDefault();
+                    }
+                } else {
+                    closeMenu();
+                }
+            });
+        });
+
+        navOverlay.addEventListener('click', closeMenu);
+
+        // Escape-Taste schließt Menü oder offene Modals
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeMenu();
+                // Schließt alle offenen Modals
+                document.querySelectorAll('.modal').forEach(m => {
+                    if(m.style.display === "block") closeModal(m.id);
+                });
+            }
+        });
+
+        // --- 2. Formular Logik ---
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function() {
+                const btn = this.querySelector('button');
+                if (btn) btn.innerText = 'Wird gesendet...';
+            });
+        }
+
+        // --- 3. Google Maps Logik ---
+        function loadMap() {
+            const mapBox = document.getElementById('map-box');
+            const mapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2345.244365738!2d13.882!3d54.025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTTCsDAxJzMwLjAiTiAxM8KwNTInNTUuMiJF!5e0!3m2!1sde!2sde!4v123456789"; 
+            mapBox.innerHTML = `<iframe src="${mapUrl}" allowfullscreen="" loading="lazy" style="border:0; width:100%; height:100%;"></iframe>`;
+        }
+    </script>
 </body>
 </html>
